@@ -8,41 +8,48 @@ class HistorialPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Historial'),
-      ),
+      appBar: AppBar(title: const Text('Historial')),
       body: FutureBuilder<List<dynamic>>(
         future: obtenerPagos(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
           }
 
-          final pagos = snapshot.data!;
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
+
+          final pagos = snapshot.data ?? [];
 
           if (pagos.isEmpty) {
-            return const Center(
-              child: Text('No hay pagos registrados'),
-            );
+            return const Center(child: Text('No hay pagos registrados'));
           }
 
           return ListView.builder(
+            padding: const EdgeInsets.all(12),
             itemCount: pagos.length,
             itemBuilder: (context, index) {
               final pago = pagos[index];
+              final aprobado = pago['estado'] == 'APROBADO';
 
               return Card(
-                margin: const EdgeInsets.all(10),
+                elevation: 3,
+                margin: const EdgeInsets.only(bottom: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
                 child: ListTile(
-                  title: Text(pago['producto']),
-                  subtitle: Text(
-                    '${pago['estado']} - \$${pago['total']}',
+                  leading: Icon(
+                    aprobado ? Icons.check_circle : Icons.cancel,
+                    color: aprobado ? Colors.green : Colors.red,
                   ),
-                  trailing: Text(
-                    '****${pago['ultimos4']}',
+                  title: Text(
+                    pago['producto'] ?? 'Producto',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
+                  subtitle: Text('${pago['estado']} - \$${pago['total']}'),
+                  trailing: Text('****${pago['ultimos4'] ?? '0000'}'),
                 ),
               );
             },

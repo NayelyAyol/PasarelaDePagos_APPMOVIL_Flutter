@@ -17,32 +17,45 @@ class ProductosPage extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (_) => const HistorialPage(),
-                ),
+                MaterialPageRoute(builder: (_) => const HistorialPage()),
               );
             },
-          )
+          ),
         ],
       ),
       body: ListView.builder(
+        padding: const EdgeInsets.all(12),
         itemCount: productos.length,
         itemBuilder: (context, index) {
           final producto = productos[index];
 
           return Card(
-            margin: const EdgeInsets.all(10),
+            elevation: 3,
+            margin: const EdgeInsets.only(bottom: 14),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18),
+            ),
             child: ListTile(
-              title: Text(producto.nombre),
-              subtitle: Text('\$${producto.precio}'),
+              contentPadding: const EdgeInsets.all(16),
+              leading: CircleAvatar(
+                radius: 26,
+                child: Text(
+                  producto.nombre[0],
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              title: Text(
+                producto.nombre,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text('\$${producto.precio.toStringAsFixed(2)}'),
               trailing: ElevatedButton(
                 child: const Text('Comprar'),
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) =>
-                          ResumenPage(producto: producto),
+                      builder: (_) => ResumenPage(producto: producto),
                     ),
                   );
                 },
