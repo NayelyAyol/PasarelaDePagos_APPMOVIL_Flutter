@@ -14,51 +14,41 @@ class ProductosPage extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.history),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const HistorialPage()),
-              );
-            },
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const HistorialPage())),
           ),
         ],
       ),
       body: ListView.builder(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(14),
         itemCount: productos.length,
         itemBuilder: (context, index) {
           final producto = productos[index];
-
           return Card(
-            elevation: 3,
-            margin: const EdgeInsets.only(bottom: 14),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(18),
-            ),
+            elevation: 0,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            margin: const EdgeInsets.only(bottom: 12),
             child: ListTile(
-              contentPadding: const EdgeInsets.all(16),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               leading: CircleAvatar(
-                radius: 26,
-                child: Text(
-                  producto.nombre[0],
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                radius: 24,
+                backgroundColor: const Color(0xFF534AB7),
+                child: Text(producto.nombre[0],
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w600, fontSize: 18)),
+              ),
+              title: Text(producto.nombre,
+                  style: const TextStyle(fontWeight: FontWeight.w600)),
+              subtitle: Text('\$${producto.precio.toStringAsFixed(2)}',
+                  style: const TextStyle(color: Color(0xFF534AB7), fontWeight: FontWeight.w500)),
+              trailing: FilledButton(
+                style: FilledButton.styleFrom(
+                  backgroundColor: const Color(0xFF534AB7),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 ),
-              ),
-              title: Text(
-                producto.nombre,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: Text('\$${producto.precio.toStringAsFixed(2)}'),
-              trailing: ElevatedButton(
+                onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => ResumenPage(producto: producto))),
                 child: const Text('Comprar'),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => ResumenPage(producto: producto),
-                    ),
-                  );
-                },
               ),
             ),
           );
