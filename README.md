@@ -47,7 +47,11 @@ Aplicación desarrollada en **Flutter** que simula el proceso de compra y pago d
 ✅ Compatible con Android, Web y Windows
 
 ---
+## Link de la APK
 
+- https://drive.google.com/drive/folders/1xcThufjHHDY8rY6bgEaBTEzYjTJUy5qR?usp=sharing
+
+---
 ## 🛠 Tecnologías Utilizadas
 
 | Tecnología      | Versión     |
@@ -100,11 +104,9 @@ flutter run
 
 ## 📱 Plataformas Compatibles
 
-✅ Android
-
-✅ Web
-
-✅ Windows
+- Android
+- Web
+- Windows
 
 ---
 
